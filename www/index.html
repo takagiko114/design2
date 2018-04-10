@@ -1,0 +1,239 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+  <script src="components/loader.js"></script>
+  <script src="lib/angular/angular.min.js"></script>
+  <script src="lib/onsenui/js/onsenui.min.js"></script>
+  <script src="lib/onsenui/js/angular-onsenui.min.js"></script>
+
+  <link rel="stylesheet" href="components/loader.css">
+  <link rel="stylesheet" href="lib/onsenui/css/onsenui.css">
+  <link rel="stylesheet" href="lib/onsenui/css/onsen-css-components.css">
+  <link rel="stylesheet" href="css/style.css">
+  
+ <script>
+     
+myApp.controller('listDetailCtrl', function(){ 
+
+      this.name = '初期名称';
+      this.age = '0';
+      // myNavigator.pushPageで送ったdataを受け取る 
+      var data = myNavigator.topPage.data;
+      // 正しく受け取ることができたら、値を取得
+      if(data != undefined){
+          this.name = data.name; 
+          this.age = data.age; 
+      }
+    	
+	});
+    
+    var showTemplateDialog = function() {
+    var dialog = document.getElementById('my-dialog');
+
+      if (dialog) {
+        dialog.show();
+        } else {
+        ons.createElement('dialog.html', { append: true })
+        .then(function(dialog) {
+            dialog.show();
+         });
+        }
+    };
+
+var hideDialog = function(id) {
+  document
+    .getElementById(id)
+    .hide();
+};     
+     
+ </script> 
+</head>
+<body>
+    <!-- 共通ページ -->
+    <ons-navigator var="myNavigator" page="listDetail.html">
+        <ons-page ng-controller="pageCtrl as pctrl">
+          　<ons-toolbar id="toolbar">
+            　　<div class="center">パスワード管理</div>
+            </ons-toolbar>
+
+            <ons-tabbar position="bottom">
+                <ons-tab page="home.html" label="登録" icon="home" active></ons-tab>
+                <ons-tab page="list.html" label="一覧" icon="list"></ons-tab>
+                <ons-tab page="history.html" label="詳細" icon="history"></ons-tab>
+            </ons-tabbar>
+        </ons-page>
+    </ons-navigator>
+
+    <!-- 登録画面 -->
+    <ons-template id="home.html">
+        <ons-page id="homePage" ons-show="pctrl.title = 'ホーム'">
+            <div class="content" ng-app="myApp">
+        <div style="text-align: center; margin-top: 30px;">
+        <p>
+            　サイト名<ons-input id="answer" modifier="material"></ons-input>
+        </p>
+        <p>
+            　　　　ID<ons-input id="answer" modifier="material"></ons-input>
+        </p>
+        <p>
+            パスワード<ons-input id="answer" modifier="material"></ons-input>
+        </p>
+        </div>
+            
+        <p></p>
+            <ons-button modifier="large--cta">
+            登録
+            </ons-button>
+            </div>
+        </ons-page>
+    </ons-template>
+
+    <!-- 一覧画面 -->
+    <ons-template id="list.html">
+        <ons-page id="listPage" ons-show="pctrl.title = '一覧'">
+            <div class="content" ng-app="myApp">
+                <div class="main">
+        <div style="text-align: center;">
+        <p>サイトA　　　　　　　<button class="button--cta"> ID </button>　<button class="button--cta"> PASS </button>　<ons-button onclick="showTemplateDialog()">Delete</ons-button>
+        <p>サイトB　　　　　　　<button class="button--cta"> ID </button>　<button class="button--cta"> PASS </button>　<ons-button onclick="showTemplateDialog()">Delete</ons-button>
+        <p>サイトC　　　　　　　<button class="button--cta"> ID </button>　<button class="button--cta"> PASS </button>　<ons-button onclick="showTemplateDialog()">Delete</ons-button>
+
+
+        <!--<ons-button ng-click="myNavigator.pushPage('listDetail.html');">詳細画面へ</ons-button>-->
+
+
+        <ons-button onclick="">button</ons-button>
+
+        <template id="dialog.html">
+            <ons-dialog id="my-dialog">
+            <div style="text-align: center; padding: 10px;">
+                <p>
+                   本当に削除しますか？
+                </p>
+
+                <p>
+                    <ons-button onclick="hideDialog('my-dialog')"> Cancel </ons-button>　　
+                    <ons-button onclick="hideDialog('my-dialog')"> OK </ons-button>
+                </p>
+            </div>
+            </ons-dialog>
+        </template>
+    
+            </div>
+        </ons-page>
+    </ons-template>
+
+    <!-- 詳細画面 -->
+    <ons-template id="listDetail.html">
+        <ons-page id="detailPage" ons-show="pctrl.title = '詳細'">
+            <!-- START toolbar追加 -->
+            <ons-toolbar id="toolbar">
+                <!-- 一覧ページへの戻るボタンを実装 -->
+                <ons-back-button>戻る</ons-back-button>
+                <div class="center">{{pctrl.title}}</div>
+            </ons-toolbar>
+            <!-- END toolbar追加 -->
+            <div class="content" ng-app="myApp">
+                <div class="main">
+                </div>
+            </div>
+        </ons-page>
+    </ons-template>
+
+    <!-- 編集画面 -->
+    <ons-template id="listEdit.html">
+        <ons-page id="editPage" ons-show="pctrl.title = '編集'">
+            <div class="content" ng-app="myApp">
+                <div class="main">
+                </div>
+            </div>
+        </ons-page>
+    </ons-template>
+
+    <!-- 履歴画面 -->
+    <ons-template id="history.html">
+        <ons-page id="historyPage" ons-show="pctrl.title = '履歴'">
+            <div class="content" ng-app="myApp">
+                <div class="main">
+<p>サイトA</p>
+<p>サイトA</p>
+<p>サイトA</p>
+ 
+ 
+                </div>
+            </div>
+        </ons-page>
+    </ons-template>
+
+    <!-- グラフ画面 -->
+    <ons-template id="chart.html">
+        <ons-page id="chartPage" ons-show="pctrl.title = 'グラフ'">
+            <div class="content" ng-app="myApp">
+                <div class="main">
+                    <p>グラフ画面</p>
+                </div>
+            </div>
+        </ons-page>
+    </ons-template>
+
+    <!-- 計算画面 -->
+    <ons-template id="simulation.html">
+        <ons-page id="simPage" ons-show="pctrl.title = '計算'">
+            <div class="content" ng-app="myApp">
+                <div class="main">
+                    <p>計算画面</p>
+                </div>
+            </div>
+        </ons-page>
+    </ons-template>
+
+    <!-- 設定画面 -->
+    <ons-template id="config.html">
+        <ons-page id="configPage" ons-show="pctrl.title = '設定'">
+            <div class="content" ng-app="myApp">
+                <div class="main">
+                    <p>設定画面</p>
+                </div>
+            </div>
+        </ons-page>
+    </ons-template>
+<script>
+    // モジュールの定義
+    var myApp = ons.bootstrap('myApp',[]);
+
+    /**
+     * 画面遷移用コントローラ
+     */ 
+    myApp.controller('pageCtrl', function() {
+
+        // タブバーを取得
+        var tabbar = document.querySelector("ons-tabbar");
+
+        // 1つ目のタブへ遷移
+        this.changeHomeTab = function(){
+            tabbar.setActiveTab(0);
+        };
+        // 2つ目のタブへ遷移
+        this.changeListTab = function(){
+            tabbar.setActiveTab(1);
+        }
+        // 3つ目のタブへ遷移
+        this.changeHistoryTab = function(){
+            tabbar.setActiveTab(2);
+        }
+        // 4つ目のタブへ遷移
+        this.changeSimTab = function(){
+            tabbar.setActiveTab(3);
+        }
+        // 5つ目のタブへ遷移
+        this.changeConfigTab = function(){
+            tabbar.setActiveTab(4);
+        }
+    });
+</script>
+</body>
+</html>
+<script src="js/listController.js"></script>
